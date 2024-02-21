@@ -34,3 +34,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+## https://nextjs.org/docs/getting-started/installation
+
+- npx create-next-app@latest
+
+## https://ui.shadcn.com/docs/installation/next
+
+- npx shadcn-ui@latest init
+
+- Would you like to use TypeScript (recommended)?  yes
+- Which style would you like to use? › Default
+- Which color would you like to use as base color? › Slate
+- Where is your global CSS file? › › app/globals.css
+- Do you want to use CSS variables for colors? › yes
+- Are you using a custom tailwind prefix eg. tw-? (Leave blank if not) ...
+- Where is your tailwind.config.js located? › tailwind.config.ts
+- Configure the import alias for components: › @/components
+- Configure the import alias for utils: › @/lib/utils
+- Are you using React Server Components? ›  yes
