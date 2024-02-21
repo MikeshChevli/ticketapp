@@ -54,3 +54,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Configure the import alias for components: › @/components
 - Configure the import alias for utils: › @/lib/utils
 - Are you using React Server Components? ›  yes
+
+
+## https://ui.shadcn.com/docs/dark-mode/next
+
+- npm install next-themes
