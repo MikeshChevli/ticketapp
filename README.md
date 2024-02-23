@@ -58,4 +58,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## https://ui.shadcn.com/docs/dark-mode/next
 
-- npm install next-themes
+- npm install next-themes 
+  
+
+npm i zod react-hook-form @hookform/resolvers
+npm i --save react-simplemde-editor easymde

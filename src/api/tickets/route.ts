@@ -1,22 +1,19 @@
 import connectDB from "@/lib/db";
-import ticketModel from "@/lib/model/ticketModel";
-import { NextResponse } from "next/server";
+import Ticket from "@/lib/model/ticketModel";
+import { ticketSchema } from "@/validationSchemas/ticket";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   await connectDB();
+
   try {
-    const sample = {
-      title: "Network Connectivity Issue",
-      description:
-        "Users are experiencing intermittent network connectivity problems. Investigation needed to identify and resolve the issue.",
-      status: "OPEN",
-      priority: "MEDIUM",
-    };
-    const ticket = new ticketModel(sample);
-    await ticket.save();
-    return NextResponse.json({
-      message: "Ticket created successfully",
-    });
+    const body = await req.json();
+    const validation = ticketSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(validation.error.format(), { status: 400 });
+    }
+    const ticket = await Ticket.create({ data: { ...body } });
+    return NextResponse.json(ticket, { status: 201 }); // 201 Created
   } catch (error) {
     return NextResponse.json({
       message: "Error creating ticket",

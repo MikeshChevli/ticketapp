@@ -29,7 +29,9 @@ const DataTable = ({ tickets }: Props) => {
               <TableHead>
                 <div className="flex justify-center">Priority</div>
               </TableHead>
-              <TableHead>CreatedAt</TableHead>
+              <TableHead>
+                <div className="flex justify-center">CreatedAt</div>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -48,14 +50,16 @@ const DataTable = ({ tickets }: Props) => {
                       </div>
                     </TableCell>
                     <TableCell>
-                      {ticket.createdAt.toLocaleDateString("en-IN", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "numeric",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}
+                      <div className="flex justify-center">
+                        {ticket.createdAt.toLocaleDateString("en-IN", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "numeric",
+                          minute: "2-digit",
+                          hour12: true,
+                        })}
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))
