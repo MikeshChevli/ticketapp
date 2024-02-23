@@ -14,7 +14,7 @@ const ToggleMode = () => {
   if (!mounted) {
     return (
       <Button variant="outline" size="icon" disabled>
-        <Sun className="hover:cursor-pointer hover:text-primary" />
+        <Moon className="hover:cursor-pointer hover:text-primary" />
       </Button>
     );
   }
