@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { z } from "zod";
 import { ticketSchema } from "@/validationSchemas/ticket";
@@ -15,15 +15,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { Button } from "./ui/button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type TicketFormData = z.infer<typeof ticketSchema>;
 const TicketsForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
   const form = useForm<TicketFormData>({
     resolver: zodResolver(ticketSchema),
   });
 
   const onSubmit = async (values: z.infer<typeof ticketSchema>) => {
-    console.log(values);
+    // console.log(values);
+    try {
+      setIsSubmitting(true);
+      setError("");
+      await axios.post("/api/tickets", values);
+      setIsSubmitting(false);
+      router.push("/tickets");
+      router.refresh();
+    } catch (error) {
+      setError("Something went wrong");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -60,7 +79,7 @@ const TicketsForm = () => {
                 <FormItem>
                   <FormLabel>Status</FormLabel>
                   <Select
-                    onOpenChange={field.onChange}
+                    onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
@@ -84,7 +103,7 @@ const TicketsForm = () => {
                 <FormItem>
                   <FormLabel>Priority</FormLabel>
                   <Select
-                    onOpenChange={field.onChange}
+                    onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
@@ -102,6 +121,9 @@ const TicketsForm = () => {
               )}
             />
           </div>
+          <Button type="submit" disabled={isSubmitting}>
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
