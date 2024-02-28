@@ -1,13 +1,14 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface TicketInterface extends Document {
+  _id: string;
   title: string;
   description?: string;
   status: "OPEN" | "STARTED" | "CLOSED";
   priority: "LOW" | "MEDIUM" | "HIGH";
   createdAt: Date;
-  updatedAt: Date; 
-} // I want to use this same interface as a props in different component but when I import in that component, I dont receive this properties
+  updatedAt: Date;
+}
 
 const ticketSchema: Schema<TicketInterface> = new Schema({
   title: {
