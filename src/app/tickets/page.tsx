@@ -1,13 +1,28 @@
-import ticketModel from "@/lib/model/ticketModel";
+import Ticket from "@/lib/model/ticketModel";
 import React from "react";
 import DataTable from "./DataTable";
 import connectDB from "@/lib/db";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import Pagination from "@/components/Pagination";
 
-const Tickets = async () => {
+interface SearchParams {
+  page: string;
+}
+
+const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
   await connectDB();
-  const tickets = await ticketModel.find({});
+  const pageSize = 10;
+  const where = {};
+  const orderBy = "createdAt";
+
+  const page = parseInt(searchParams.page) || 1;
+  const ticketCount = await Ticket.countDocuments(where);
+
+  const tickets = await Ticket.find(where)
+    .sort({ [orderBy]: -1 })
+    .limit(pageSize)
+    .skip((page - 1) * pageSize);
 
   return (
     <div>
@@ -18,6 +33,11 @@ const Tickets = async () => {
         New Tickets
       </Link>
       <DataTable tickets={tickets} />
+      <Pagination
+        itemCount={ticketCount}
+        pageSize={pageSize}
+        currentPage={page}
+      />
     </div>
   );
 };
