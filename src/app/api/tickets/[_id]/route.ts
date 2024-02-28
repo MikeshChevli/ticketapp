@@ -32,3 +32,22 @@ export async function PATCH(req: NextRequest, { params }: Props) {
     );
   }
 }
+
+export async function DELETE(req: NextRequest, { params }: Props) {
+  try {
+    const ticket = await Ticket.findByIdAndDelete(params);
+
+    if (!ticket)
+      return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
+
+    return NextResponse.json(ticket, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "Error deleting ticket",
+        error: error,
+      },
+      { status: 500 }
+    );
+  }
+}

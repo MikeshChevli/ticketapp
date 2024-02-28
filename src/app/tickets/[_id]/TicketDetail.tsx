@@ -13,12 +13,15 @@ import TicketsPriority from "@/components/TicketsPriority";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import ReactMarkDown from "react-markdown";
+import DeleteButton from "./DeleteButton";
 
 interface Props {
   ticket: TicketInterface;
 }
 
 const TicketDetail = ({ ticket }: Props) => {
+  const ticketId = JSON.parse(JSON.stringify(ticket._id));
+
   return (
     <div className="lg:grid lg:grid-cols-4">
       <Card className="mb-4 lg:col-span-3 lg:mr-4">
@@ -64,14 +67,7 @@ const TicketDetail = ({ ticket }: Props) => {
         >
           Edit Ticket
         </Link>
-        <Link
-          href={`/tickets/edit/${ticket._id}`}
-          className={`${buttonVariants({
-            variant: "destructive",
-          })}`}
-        >
-          Delete Ticket
-        </Link>
+        <DeleteButton ticketId={ticketId} />
       </div>
     </div>
   );
