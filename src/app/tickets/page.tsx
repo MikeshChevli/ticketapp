@@ -1,4 +1,4 @@
-import Ticket from "@/lib/model/ticketModel";
+import Ticket, { TicketInterface } from "@/lib/model/ticketModel";
 import React from "react";
 import DataTable from "./DataTable";
 import connectDB from "@/lib/db";
@@ -7,16 +7,17 @@ import { buttonVariants } from "@/components/ui/button";
 import Pagination from "@/components/Pagination";
 import StatusFilter from "@/components/StatusFilter";
 
-interface SearchParams {
+export interface SearchParams {
   status: "OPEN" | "STARTED" | "CLOSED";
   page: string;
+  orderBy: keyof TicketInterface;
 }
 
 const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
   await connectDB();
   const pageSize = 10;
   let where = {};
-  const orderBy = "createdAt";
+  const orderBy = searchParams.orderBy;
 
   const page = parseInt(searchParams.page) || 1;
 
@@ -38,7 +39,7 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
   const ticketCount = await Ticket.countDocuments(where);
 
   const tickets = await Ticket.find(where)
-    .sort({ [orderBy]: -1 })
+    .sort({ [orderBy]: 1 })
     .limit(pageSize)
     .skip((page - 1) * pageSize);
 
@@ -53,7 +54,7 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
         </Link>
         <StatusFilter />
       </div>
-      <DataTable tickets={tickets} />
+      <DataTable searchParams={searchParams} tickets={tickets} />
       <Pagination
         itemCount={ticketCount}
         pageSize={pageSize}
