@@ -8,6 +8,8 @@ export interface TicketInterface extends Document {
   priority: "LOW" | "MEDIUM" | "HIGH";
   createdAt: Date;
   updatedAt: Date;
+  assignedToUserId?: number;
+  
 }
 
 const ticketSchema: Schema<TicketInterface> = new Schema({
